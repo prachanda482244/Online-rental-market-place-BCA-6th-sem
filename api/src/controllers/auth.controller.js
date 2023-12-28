@@ -1,7 +1,7 @@
 import { User } from "../schema/models.js";
 import { generateHashCode } from "../utils/hashing.utils.js";
 
-export const signup = async (req, res) => {
+export const signup = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
         if (!username || !email || !password) res.status(400).json({ message: 'All field required' })
@@ -18,6 +18,6 @@ export const signup = async (req, res) => {
             user: user
         })
     } catch (error) {
-        res.status(400).send(error.message)
+        next(error)
     }
 }
