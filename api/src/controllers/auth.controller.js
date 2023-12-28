@@ -5,7 +5,10 @@ import successResponse from "../utils/successResponse.utils.js";
 export const signup = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
-        if (!username || !email || !password) res.status(400).json({ message: 'All field required' })
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: 'All fields required' });
+        }
+
         const hashPassword = await generateHashCode(password)
         const userInfo = {
             username,
@@ -13,14 +16,17 @@ export const signup = async (req, res, next) => {
             password: hashPassword
         }
         const user = await User.create(userInfo)
-        if (!user) res.status(400).json("User cannot created")
+        if (!user) {
+            return res.status(500).json({ message: 'User creation failed' });
+        }
+
         successResponse({
             res,
             status: 200,
             result: user,
             message: 'User Created Successfully'
-        })
+        });
     } catch (error) {
-        next(error)
+        next(error);
     }
 }
