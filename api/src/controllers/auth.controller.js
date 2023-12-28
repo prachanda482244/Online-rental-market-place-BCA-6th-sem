@@ -1,5 +1,6 @@
 import { User } from "../schema/models.js";
 import { generateHashCode } from "../utils/hashing.utils.js";
+import successResponse from "../utils/successResponse.utils.js";
 
 export const signup = async (req, res, next) => {
     try {
@@ -13,9 +14,11 @@ export const signup = async (req, res, next) => {
         }
         const user = await User.create(userInfo)
         if (!user) res.status(400).json("User cannot created")
-        res.status(200).json({
-            message: 'User created succesfully',
-            user: user
+        successResponse({
+            res,
+            status: 200,
+            result: user,
+            message: 'User Created Successfully'
         })
     } catch (error) {
         next(error)
