@@ -21,7 +21,7 @@ const SignIn = () => {
       setLoading(true)
       const { data } = await axios({
         method: 'post',
-        url: '/api/signin',
+        url: '/api/v1/users/signin',
         headers: {
           "Content-Type": "application/json"
         },

@@ -21,7 +21,7 @@ const SignUp = () => {
       setLoading(true)
       const { data } = await axios({
         method: 'post',
-        url: '/api/signup',
+        url: '/api/v1/users/signup',
         headers: {
           "Content-Type": "application/json"
         },
