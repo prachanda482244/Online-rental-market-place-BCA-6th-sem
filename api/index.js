@@ -1,8 +1,7 @@
 import express from "express";
 import { port } from "./src/config/config.js";
 import { connectToDb } from "./src/db/connect.js";
-import userRouter from "./src/routers/user.route.js";
-import UserRouter from "./src/routers/auth.route.js";
+import authRouter from "./src/routers/auth.route.js";
 import { errorMiddleware } from "./src/middleware/error.middleware.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
@@ -13,8 +12,7 @@ app.get('/', (req, res) => {
     res.send("hello world")
 
 })
-app.use(userRouter)
-app.use(UserRouter)
+app.use("/api/v1", authRouter)
 app.use(errorMiddleware)
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
