@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
     res.send("hello world")
 
 })
-app.use("/api/v1", authRouter)
+app.use("/api/v1/users", authRouter)
 app.use(errorMiddleware)
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
