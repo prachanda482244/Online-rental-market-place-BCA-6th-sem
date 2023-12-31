@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Oauth from '../components/Oauth'
 
 const SignUp = () => {
   const [show, setIsShow] = useState(false)
@@ -54,6 +55,7 @@ const SignUp = () => {
           <input type='checkbox' className='w-[20px] h-[20px] absolute right-4 top-4 rounded-lg cursor-pointer' onClick={() => setIsShow(!show)} />
         </div>
         <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'loading' : 'Sign up'}</button>
+        <Oauth />
       </form>
       <div className='flex gap-2 mt-5 '>
         <p>Have an account?</p>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { signInFailure, signInStart, signInSuccess } from '../redux/user/userSlice'
+import Oauth from '../components/Oauth'
 
 const SignIn = () => {
   const [show, setIsShow] = useState(false)
@@ -53,6 +54,8 @@ const SignIn = () => {
           <input type='checkbox' className='w-[20px] h-[20px] absolute right-4 top-4 rounded-lg cursor-pointer' onClick={() => setIsShow(!show)} />
         </div>
         <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'loading' : 'Sign in'}</button>
+        <Oauth />
+
       </form>
       <div className='flex gap-2 mt-5 '>
         <p>Dont have an account?</p>
