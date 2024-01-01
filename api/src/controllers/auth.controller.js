@@ -59,3 +59,45 @@ export const signIn = async (req, res, next) => {
         next(error)
     }
 }
+
+export const googleSignIn = async (req, res, next) => {
+    const { name, email, photo } = req.body
+    try {
+        const user = await User.findOne({ email })
+        if (user) {
+            let info = {
+                id: user._id
+            }
+            const token = generateToken(info, secretKey)
+            const { password, ...rest } = user._doc
+            successResponse({
+                res: res.cookie('accesstoken', token, { httpOnly: true }),
+                status: 200,
+                result: rest
+            })
+
+        } else {
+            const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const hashedPassword = await generateHashCode(generatedPassword)
+            const newUser = new User({
+                username: name.split(" ").join("").toLowerCase() + Math.random().toString(36).slice(-4),
+                email: email,
+                password: hashedPassword,
+                avatar: photo
+            })
+            await newUser.save()
+            const token = generateToken({ id: newUser._id }, secretKey)
+            const { password, ...rest } = newUser._doc
+            successResponse({
+                res: res.cookie('accesstoken', token, { httpOnly: true }),
+                status: 200,
+                result: rest
+            })
+        }
+
+    } catch (error) {
+        next(error)
+
+    }
+
+}

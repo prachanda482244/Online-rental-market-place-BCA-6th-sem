@@ -13,6 +13,7 @@ app.get('/', (req, res) => {
 
 })
 app.use("/api/v1/users", authRouter)
+
 app.use(errorMiddleware)
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
