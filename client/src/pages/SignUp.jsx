@@ -28,7 +28,7 @@ const SignUp = () => {
         },
         data: JSON.stringify(formData)
       });
-      console.log(data);
+
       if (data.success === false) {
         setError(data.message);
         setLoading(false)

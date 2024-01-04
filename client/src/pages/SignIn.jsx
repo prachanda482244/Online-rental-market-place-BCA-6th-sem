@@ -31,7 +31,7 @@ const SignIn = () => {
         },
         data: JSON.stringify(formData)
       });
-      console.log(data);
+
       if (data.success === false) {
         dispatch(signInFailure(data.message))
         return

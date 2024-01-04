@@ -2,7 +2,6 @@ import { useSelector } from "react-redux"
 
 const Profile = () => {
   const { currentUser } = useSelector(state => state.user)
-  console.log(currentUser);
   return (
     <div className="p-2 max-w-lg mx-auto ">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
