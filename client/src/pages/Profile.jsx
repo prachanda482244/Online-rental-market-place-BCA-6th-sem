@@ -21,6 +21,7 @@ const Profile = () => {
 
   useEffect(() => {
     handleFileUpload(file)
+    // eslint-disable-next-line
   }, [file])
 
   const handleFileUpload = (file) => {
