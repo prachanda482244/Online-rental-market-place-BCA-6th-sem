@@ -12,6 +12,7 @@ import {
   deleteUserFailure,
   signOutuser
 } from "../redux/user/userSlice"
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
   const [file, setFile] = useState(undefined)
@@ -150,6 +151,9 @@ const Profile = () => {
 
         {/* <input type="password" placeholder="confirm Password" className="border p-3 rounded-lg " id="cPassword" /> */}
         <button disabled={loading} className="bg-slate-700 text-white rounded-lg px-3 py-4 uppercase hover:opacity-90 disabled:opacity-80">{loading ? 'Loading...' : 'Update'}</button>
+        <Link className="p-3 rounded-lg bg-green-700 text-white text-center uppercase" to='/create-listing'>
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-2">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
