@@ -39,3 +39,24 @@ export const updateUser = async (req, res, next) => {
         next(err)
     }
 }
+
+export const deleteUser = async (req, res, next) => {
+    const accessTokenID = req.user.id
+    const _id = req.params.id
+    if (accessTokenID !== _id) return next(errorHandler(401, 'Unauthorized user for delete account'))
+    try {
+        const user = await User.findByIdAndDelete(_id)
+        if (!user) return next(errorHandler(400, 'User not found'))
+        successResponse({
+            res,
+            status: 200,
+            message: 'User deleted successfully',
+            result: user
+        })
+
+    } catch (error) {
+        next(error)
+    }
+
+
+}
