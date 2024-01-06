@@ -80,7 +80,7 @@ export const googleSignIn = async (req, res, next) => {
             const token = generateToken(info, secretKey);
             const { password, ...rest } = user._doc;
             successResponse({
-                res: res.cookie('accesstoken', token, { httpOnly: true }),
+                res: res.cookie('accessToken', token, { httpOnly: true }),
                 status: 200,
                 result: rest
             });
@@ -99,7 +99,7 @@ export const googleSignIn = async (req, res, next) => {
             const token = generateToken({ id: newUser._id }, secretKey);
             const { password, ...rest } = newUser._doc;
             successResponse({
-                res: res.cookie('accesstoken', token, { httpOnly: true }),
+                res: res.cookie('accessToken', token, { httpOnly: true }),
                 status: 200,
                 result: rest
             });

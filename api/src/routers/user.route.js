@@ -5,5 +5,5 @@ import { verifyUser } from "../middleware/verifyUser.middleware.js";
 const userRouter = Router();
 
 userRouter.route('/test').get(users)
-userRouter.route("/update/:id").patch(verifyUser, updateUser).get(updateUser)
+userRouter.route("/update/:id").post(verifyUser, updateUser).get(updateUser)
 export default userRouter
