@@ -9,7 +9,8 @@ import {
   updateUserSuccess,
   deleteUserStart,
   deleteUserSuccess,
-  deleteUserFailure
+  deleteUserFailure,
+  signOutuser
 } from "../redux/user/userSlice"
 
 const Profile = () => {
@@ -102,6 +103,20 @@ const Profile = () => {
       dispatch(deleteUserFailure(error.message))
     }
   }
+  const handleSignOut = async () => {
+    try {
+      const { data } = await axios({
+        method: 'get',
+        url: '/api/v1/users/signout'
+      })
+      if (data.success === false) {
+        error('Signout failed')
+      }
+      dispatch(signOutuser())
+    } catch (error) {
+      error('Error occured', error)
+    }
+  }
   return (
     <div className="p-2 max-w-lg mx-auto ">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -138,7 +153,7 @@ const Profile = () => {
       </form>
       <div className="flex justify-between mt-2">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       <p className="text-red-700">{error ? error : ''}</p>
       <p className="text-green-700 text-center ">{userUpdateSuccess ? 'User update succesfully' : ''}</p>

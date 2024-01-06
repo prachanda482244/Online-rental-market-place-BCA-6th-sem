@@ -108,3 +108,15 @@ export const googleSignIn = async (req, res, next) => {
         next(error);
     }
 };
+
+export const signOut = (req, res, next) => {
+    try {
+        successResponse({
+            res: res.clearCookie("accessToken"),
+            status: 200,
+            message: 'User has been logged out'
+        })
+    } catch (error) {
+        next(error)
+    }
+}
