@@ -16,3 +16,21 @@ export const createListing = async (req, res, next) => {
         next(error)
     }
 }
+
+export const getListing = async (req, res, next) => {
+    if (req.user.id !== req.params.id) return next(errorHandler(401, 'Unauthorized user'))
+
+    try {
+        const listing = await Listing.find({ userRef: req.params.id })
+        if (!listing) return next(errorHandler(400, 'Unable to create the listing'))
+
+        successResponse({
+            res,
+            status: 200,
+            message: 'Listings',
+            result: listing
+        })
+    } catch (error) {
+        next(error)
+    }
+}

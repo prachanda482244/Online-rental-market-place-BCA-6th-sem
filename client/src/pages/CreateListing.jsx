@@ -94,6 +94,8 @@ const CreateListing = () => {
     };
 
     const handleChange = (e) => {
+
+        // Checking for the type
         if (e.target.id === 'sale' || e.target.id === 'rent') {
             setFormData({
                 ...formData,
@@ -101,6 +103,7 @@ const CreateListing = () => {
             });
         }
 
+        // Checking For the check boxes where the value is true or false
         if (
             e.target.id === 'parking' ||
             e.target.id === 'furnished' ||
@@ -112,6 +115,7 @@ const CreateListing = () => {
             });
         }
 
+        // Checking for the text values
         if (
             e.target.type === 'number' ||
             e.target.type === 'text' ||
