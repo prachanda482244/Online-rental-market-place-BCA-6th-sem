@@ -21,6 +21,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({})
   const [show, setIsShow] = useState(false)
   const [userUpdateSuccess, setUserUpdateSuccess] = useState(false)
+  const [showListingError, setShowListingError] = useState(false)
+  const [userListing, setUserListing] = useState([])
   const dispatch = useDispatch()
   const fileRef = useRef(null)
   const { currentUser, loading, error } = useSelector(state => state.user)
@@ -118,6 +120,27 @@ const Profile = () => {
       error('Error occured', error)
     }
   }
+
+  const handleShowListings = async () => {
+    try {
+      const { data } = await axios({
+        method: 'get',
+        url: `/api/v1/listing/getListing/${id}`
+      })
+      if (data.success === false) {
+        setShowListingError(true)
+        return
+      }
+      console.log(data?.result);
+      setUserListing(data?.result)
+    } catch (error) {
+      setShowListingError(true)
+    }
+  }
+
+  const handleListingDelete = () => {
+  }
+
   return (
     <div className="p-2 max-w-lg mx-auto ">
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -161,6 +184,31 @@ const Profile = () => {
       </div>
       <p className="text-red-700">{error ? error : ''}</p>
       <p className="text-green-700 text-center ">{userUpdateSuccess ? 'User update succesfully' : ''}</p>
+      <button onClick={handleShowListings} className="text-green-700 w-full">Show listing</button>
+      <p className="text-red-700 mt-5">{showListingError ? 'Error showing listing' : ''}</p>
+      {userListing && userListing.length > 0 &&
+        userListing.map((listing) => (
+          <div key={listing._id} className="p-3 border rounded-lg  flex justify-between items-center gap-4">
+            <Link to={`listing/${listing._id}`}>
+              <img className="h-16 w-16 object-cover " src={listing.imageUrls[0]} alt="listing" />
+            </Link>
+            <Link to={`listing/${listing._id}`}>
+              <p className="text-slate-700 flex-1 hover:underline truncate">{listing.name}</p>
+            </Link>
+            <div className='flex flex-col item-center'>
+              <button
+                onClick={() => handleListingDelete(listing._id)}
+                className='text-red-700 uppercase'
+              >
+                Delete
+              </button>
+              <Link to={`/update-listing/${listing._id}`}>
+                <button className='text-green-700 uppercase'>Edit</button>
+              </Link>
+            </div>
+          </div>
+        ))
+      }
     </div>
   )
 }
