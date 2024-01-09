@@ -39,8 +39,7 @@ export const deleteListing = async (req, res) => {
 
     const listing = await Listing.findById(id)
     if (!listing) return next(errorHandler(404, 'Listing Not found'))
-
-    if (id !== listing.userRef) {
+    if (req.user.id !== listing.userRef) {
         return next(errorHandler(401, 'Unauthorized , cant delete anyone else listing'))
     }
     try {
