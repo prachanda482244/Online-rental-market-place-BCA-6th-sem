@@ -138,7 +138,20 @@ const Profile = () => {
     }
   }
 
-  const handleListingDelete = () => {
+  const handleListingDelete = async (listingId) => {
+    try {
+      const { data } = await axios({
+        method: 'delete',
+        url: `/api/v1/listing/deleteListing/${listingId}`
+      })
+      if (data.success === false) {
+        console.log(data.message);
+      }
+      setUserListing((prev) => prev.filter((listing) => listing._id !== listingId))
+    } catch (error) {
+      console.log(error.message);
+    }
+
   }
 
   return (
