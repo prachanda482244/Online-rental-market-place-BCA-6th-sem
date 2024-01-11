@@ -2,7 +2,7 @@ import { Listing } from "../schema/models.js"
 import { errorHandler } from "../utils/errorHandler.utils.js"
 import successResponse from "../utils/successResponse.utils.js"
 
-export const createListing = async (req, res, next) => {
+export const createListing = async(req, res, next) => {
     try {
         const listing = await Listing.create(req.body)
         if (!listing) return errorHandler(400, 'Cannot create Listing')
@@ -17,7 +17,7 @@ export const createListing = async (req, res, next) => {
     }
 }
 
-export const getListing = async (req, res, next) => {
+export const getListing = async(req, res, next) => {
     if (req.user.id !== req.params.id) return next(errorHandler(401, 'Unauthorized user'))
 
     try {
@@ -34,7 +34,7 @@ export const getListing = async (req, res, next) => {
         next(error)
     }
 }
-export const deleteListing = async (req, res) => {
+export const deleteListing = async(req, res) => {
     const id = req.params.id
     const userId = req.user.id
     const listing = await Listing.findById(id)
@@ -48,6 +48,28 @@ export const deleteListing = async (req, res) => {
     } catch (error) {
         next(error)
     }
+}
 
 
+export const updateListing = async(req, res, next) => {
+    const id = req.params.id
+    const userId = req.user.id
+
+    try {
+        const listing = await Listing.findById(id)
+        if (!listing) return next(errorHandler(404, 'Listing Not found'))
+        if (userId !== listing.userRef) return next(errorHandler(401, 'Unauthorized user cannot update the listing'))
+
+        const updatedListing = await Listing.findByIdAndUpdate(id, req.body, { new: true })
+        if (!updatedListing) return next(errorHandler(400, 'failed to update listing'))
+        successResponse({
+            res,
+            status: 200,
+            message: 'Listing Update Successfully',
+            result: updatedListing
+        })
+
+    } catch (error) {
+
+    }
 }
