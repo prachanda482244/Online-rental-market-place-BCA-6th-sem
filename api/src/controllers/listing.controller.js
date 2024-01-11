@@ -82,7 +82,8 @@ export const getOneListing = async (req, res, next) => {
         successResponse({
             res,
             status: 200,
-            result: listing
+            result: listing,
+            message: 'Get one listing'
         })
     } catch (error) {
         next(error)

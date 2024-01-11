@@ -7,6 +7,6 @@ listingRouter.route('/create').post(verifyUser, createListing)
 listingRouter.route('/getListing/:id').get(verifyUser, getListing)
 listingRouter.route('/deleteListing/:id').delete(verifyUser, deleteListing)
 listingRouter.route('/updateListing/:id').put(verifyUser, updateListing)
-listingRouter.route('/getOneListing/:id').get(verifyUser, getOneListing)
+listingRouter.route('/getOneListing/:id').get(getOneListing)
 
 export default listingRouter
