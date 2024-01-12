@@ -49,7 +49,6 @@ const UpdateListing = () => {
                     url: `/api/v1/listing/getOneListing/${listingId}`
                 })
                 if (data.success === false) {
-                    console.log(data);
                     return
                 }
                 setFormData(data?.result)
@@ -57,9 +56,8 @@ const UpdateListing = () => {
                 console.log(error);
             }
         }
-
         fetchListing()
-    }, [])
+    }, [listingId])
 
     const handleImageSubmit = (e) => {
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
