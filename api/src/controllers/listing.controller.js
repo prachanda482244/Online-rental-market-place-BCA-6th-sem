@@ -1,4 +1,4 @@
-import { Listing } from "../schema/models.js"
+import { Listing, User } from "../schema/models.js"
 import { errorHandler } from "../utils/errorHandler.utils.js"
 import successResponse from "../utils/successResponse.utils.js"
 
@@ -88,6 +88,23 @@ export const getOneListing = async (req, res, next) => {
     } catch (error) {
         next(error)
 
+
+    }
+}
+export const getContactLandLord = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user) return next(errorHandler(401, 'Unauthorized landlord'))
+
+        const { password: pass, ...rest } = user._doc
+        successResponse({
+            res,
+            status: 200,
+            message: 'Landlord',
+            result: rest
+        })
+    } catch (error) {
+        next(error)
 
     }
 }

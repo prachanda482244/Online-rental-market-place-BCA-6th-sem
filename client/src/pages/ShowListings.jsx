@@ -14,6 +14,7 @@ import {
     FaParking,
     FaShare,
 } from 'react-icons/fa';
+import Contact from "../components/Contact"
 
 const ShowListings = () => {
     SwiperCore.use([Navigation])
@@ -25,7 +26,6 @@ const ShowListings = () => {
     const [contact, setContact] = useState(false);
     const params = useParams()
     const { listingId } = params
-
     const { currentUser } = useSelector((state) => state.user);
     useEffect(() => {
         const getListing = async () => {
@@ -144,7 +144,7 @@ const ShowListings = () => {
                                 Contact landlord
                             </button>
                         )}
-                        {/* {contact && <Contact listing={listing} />} */}
+                        {contact && <Contact listing={listing} />}
                     </div>
                 </div>
             )}
