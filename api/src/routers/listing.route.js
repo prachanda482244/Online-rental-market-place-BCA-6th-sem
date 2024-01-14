@@ -8,6 +8,6 @@ listingRouter.route('/getListing/:id').get(verifyUser, getListing)
 listingRouter.route('/deleteListing/:id').delete(verifyUser, deleteListing)
 listingRouter.route('/updateListing/:id').put(verifyUser, updateListing)
 listingRouter.route('/getOneListing/:id').get(getOneListing)
-listingRouter.route('/contactLandLord/:id').put(verifyUser, getContactLandLord)
+listingRouter.route('/contactLandLord/:id').get(verifyUser, getContactLandLord)
 
 export default listingRouter
