@@ -12,13 +12,14 @@ const Header = () => {
     const searchQuery = urlParams.toString()
     navigate(`/searchQuery?${searchQuery}`)
   }
+  let search = window.location.search
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(search);
     const searchTermFromUrl = urlParams.get('searchTerm');
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl);
     }
-  }, [window.location.search]);
+  }, [search]);
   return (
     <header className="bg-slate-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
