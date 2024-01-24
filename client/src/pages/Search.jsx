@@ -52,17 +52,23 @@ const Search = () => {
             setLoading(true);
             setShowMore(false);
             const searchQuery = urlParams.toString();
-            const { data } = await axios({
-                method: 'get',
-                url: `/api/v1/listing/getListings?${searchQuery}`
-            })
-            if (data.length > 8) {
-                setShowMore(true);
-            } else {
-                setShowMore(false);
+
+            try {
+                const { data } = await axios({
+                    method: 'get',
+                    url: `/api/v1/listing/getListings?${searchQuery}`
+                })
+                if (data.length > 8) {
+                    setShowMore(true);
+                } else {
+                    setShowMore(false);
+                }
+                console.log(data)
+                setListings(data?.result);
+                setLoading(false);
+            } catch (error) {
+                console.log(error)
             }
-            setListings(data);
-            setLoading(false);
         };
 
         fetchListings();
