@@ -128,12 +128,14 @@ const Search = () => {
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('startIndex', startIndex);
         const searchQuery = urlParams.toString();
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
-        const data = await res.json();
+        const { data } = await axios({
+            method: 'get',
+            url: `/api/v1/listing/getListings?${searchQuery}`
+        })
         if (data.length < 9) {
             setShowMore(false);
         }
-        setListings([...listings, ...data]);
+        setListings([...listings, ...data?.result]);
     };
     return (
         <div className='flex flex-col md:flex-row'>

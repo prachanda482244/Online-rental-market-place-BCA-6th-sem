@@ -1,3 +1,4 @@
+import { response } from "express";
 import { secretKey } from "../config/config.js";
 import { User } from "../schema/models.js";
 import { errorHandler } from "../utils/errorHandler.utils.js";
@@ -12,13 +13,21 @@ export const signup = async (req, res, next) => {
             return res.status(400).json({ message: 'All fields required' });
         }
 
-        const hashPassword = await generateHashCode(password)
+        // Check if the user with the given email already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists with that email address' });
+        }
+
+        const hashPassword = await generateHashCode(password);
         const userInfo = {
             username,
             email,
             password: hashPassword
-        }
-        const user = await User.create(userInfo)
+        };
+
+        const user = await User.create(userInfo);
+
         if (!user) {
             return res.status(500).json({ message: 'User creation failed' });
         }
@@ -32,6 +41,7 @@ export const signup = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+
 }
 
 export const signIn = async (req, res, next) => {
@@ -77,7 +87,7 @@ export const googleSignIn = async (req, res, next) => {
                 await user.save();
             }
 
-            const token = generateToken(info, secretKey);
+            const token = await generateToken(info, secretKey);
             const { password, ...rest } = user._doc;
             successResponse({
                 res: res.cookie('accessToken', token, { httpOnly: true }),
@@ -96,7 +106,7 @@ export const googleSignIn = async (req, res, next) => {
             });
 
             await newUser.save();
-            const token = generateToken({ id: newUser._id }, secretKey);
+            const token = await generateToken({ id: newUser._id }, secretKey);
             const { password, ...rest } = newUser._doc;
             successResponse({
                 res: res.cookie('accessToken', token, { httpOnly: true }),

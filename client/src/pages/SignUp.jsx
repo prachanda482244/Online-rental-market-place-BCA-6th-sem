@@ -39,7 +39,9 @@ const SignUp = () => {
       navigate("/sign-in")
     } catch (error) {
       setLoading(false)
-      setError("Some error occured")
+      console.log(error)
+      setError(error?.response?.data.message)
+      //
       console.error('Error submitting form:', error);
     }
   }

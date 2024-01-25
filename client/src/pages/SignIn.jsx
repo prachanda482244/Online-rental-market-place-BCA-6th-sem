@@ -39,7 +39,8 @@ const SignIn = () => {
       dispatch(signInSuccess(data))
       navigate("/")
     } catch (error) {
-      dispatch(signInFailure(error.message))
+      console.log(error)
+      dispatch(signInFailure(error?.response?.data.message))
     }
   }
 
