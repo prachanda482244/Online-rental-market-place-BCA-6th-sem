@@ -7,6 +7,11 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import userRouter from "./src/routers/user.route.js";
 import listingRouter from "./src/routers/listing.route.js";
+import path from 'path';
+
+
+const __dirname = path.resolve();
+
 const app = express()
 app.use(express.json({ limit: '16kb' }))
 app.use(cookieParser())
@@ -27,6 +32,11 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.urlencoded({ extended: true, limit: '16kb' }))
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 app.listen(port, () => {
     console.log(`Server running on  port ${port}`)
