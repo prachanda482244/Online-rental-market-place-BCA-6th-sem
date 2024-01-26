@@ -17,9 +17,6 @@ app.use(express.json({ limit: '16kb' }))
 app.use(cookieParser())
 
 connectToDb();
-app.get('/', (req, res) => {
-    res.send("hello world")
-})
 
 //Routes
 app.use("/api/v1/users", authRouter)
